@@ -1,0 +1,36 @@
+from PIL import Image, ImageDraw, ImageFont
+
+# Function to add a watermark to an image
+def add_watermark(input_image_path, output_image_path, watermark_text):
+    original_image = Image.open(input_image_path)
+
+    width, height = original_image.size
+
+    # Load a font (change the path to a font file on your system)
+    font = ImageFont.truetype("arial.ttf", 36)
+
+    # Create a drawing context
+    draw = ImageDraw.Draw(original_image)
+
+    # Calculate the size of the watermark text
+    text_width, text_height = draw.textsize(watermark_text, font)
+
+    # Calculate the x, y position of the watermark
+    x = width - text_width - 10
+    y = height - text_height - 10
+
+    # Define the watermark text color (you can change this)
+    text_color = (255, 255, 255)
+
+    # Add the watermark text to the image
+    draw.text((x, y), watermark_text, fill=text_color, font=font)
+
+    # Save the watermarked image
+    original_image.save(output_image_path)
+
+if __name__ == "__main__":
+    input_image_path = input("Enter the path to the input image: ")
+    output_image_path = input("Enter the path to save the watermarked image: ")
+    watermark_text = input("Enter the watermark text: ")
+
+    add_watermark(input_image_path, output_image_path, watermark_text)
